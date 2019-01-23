@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,9 @@ public class Meme {
     @ManyToOne
     private Category category;
 
-    @OneToMany(mappedBy = "meme", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OrderBy("createdDate")
+    @OneToMany(mappedBy = "meme", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    private LocalDateTime createdDate = LocalDateTime.now();
 }

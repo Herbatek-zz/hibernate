@@ -1,12 +1,12 @@
 package com.piotrke.relations_annotations.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -22,7 +22,12 @@ public class Comment {
     @ManyToOne
     private Meme meme;
 
-    private LocalDateTime dateTime = LocalDateTime.now();
-
+    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime updatedDate;
     private String content;
+
+    @PrePersist
+    private void prePersist() {
+        updatedDate = LocalDateTime.now();
+    }
 }

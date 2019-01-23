@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,8 @@ public class User {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
     private List<Comment> comments;
+
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     public User(String username) {
         this.username = username;
