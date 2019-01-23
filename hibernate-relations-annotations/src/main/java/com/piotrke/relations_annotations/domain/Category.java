@@ -1,4 +1,4 @@
-package com.piotrke.hibernateexamples.domain;
+package com.piotrke.relations_annotations.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
