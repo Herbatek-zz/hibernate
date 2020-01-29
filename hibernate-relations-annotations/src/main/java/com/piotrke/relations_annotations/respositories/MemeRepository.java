@@ -1,6 +1,6 @@
 package com.piotrke.relations_annotations.respositories;
 
-import com.piotrke.relations_annotations.domain.Meme;
+import com.piotrke.relations_annotations.entities.Meme;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

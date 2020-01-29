@@ -1,22 +1,17 @@
 package com.piotrke.relations_annotations;
 
 
-import com.piotrke.relations_annotations.domain.Category;
-import com.piotrke.relations_annotations.domain.Comment;
-import com.piotrke.relations_annotations.domain.Meme;
-import com.piotrke.relations_annotations.domain.User;
+import com.piotrke.relations_annotations.entities.Category;
+import com.piotrke.relations_annotations.entities.Comment;
+import com.piotrke.relations_annotations.entities.Meme;
+import com.piotrke.relations_annotations.entities.User;
 import com.piotrke.relations_annotations.respositories.CategoryRepository;
 import com.piotrke.relations_annotations.respositories.CommentRepository;
 import com.piotrke.relations_annotations.respositories.MemeRepository;
 import com.piotrke.relations_annotations.respositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import javax.transaction.Transactional;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -28,26 +23,27 @@ public class Boot implements CommandLineRunner {
     private final UserRepository userRepository;
 
     @Override
-    public void run(String... args) throws InterruptedException, NotFound {
-        User user = userRepository.save(new User("Magiczny Pioter"));
+    public void run(String... args) throws InterruptedException {
+        User magicznyPioter = userRepository.save(new User("Magiczny Pioter"));
         Category category = categoryRepository.save(new Category("Doge"));
-        Meme meme = createMeme(user, category);
+        Meme meme = createMeme(magicznyPioter, category);
 
-        Comment comment1 = createComment(user, meme, "hehe so funny meme");
+        Comment comment1 = createComment(magicznyPioter, meme, "hehe so funny meme");
         Thread.sleep(3000);
-        Comment comment2 = createComment(user, meme, "first comment");
+        Comment comment2 = createComment(magicznyPioter, meme, "first comment");
 
         Thread.sleep(3000);
 
         comment2.setContent("oh... I was second :<");
         commentRepository.save(comment2);
 
-        memeRepository.findByIdWithComments(meme.getId()).get().getComments().forEach(System.out::println);
+        memeRepository.findByIdWithComments(meme.getId())
+                .ifPresent(m -> m.getComments().forEach(System.out::println));
 
         System.out.println(memeRepository.findNumberOfCommentsForParticularMeme(meme.getId()));
         System.out.println(memeRepository.findNumberOfCommentsForParticularMeme(22));
 
-        userRepository.deleteById(user.getId());
+        userRepository.deleteById(magicznyPioter.getId());
 
     }
 

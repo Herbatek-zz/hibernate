@@ -1,4 +1,4 @@
-package com.piotrke.relations_annotations.domain;
+package com.piotrke.relations_annotations.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
